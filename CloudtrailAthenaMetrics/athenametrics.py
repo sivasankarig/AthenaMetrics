@@ -148,7 +148,7 @@ def collect_metrics(staging_folder, destination_bucket,tablename='default.cloudt
       s3 = boto3.resource('s3', region_name='us-west-2')
 
       infile = 'out' + str(i) + '.csv'
-      outfile = 'athena-metrics'+'/'+str(day)+'/'+'out' + str(i) + '.csv'
+      outfile = 'athena-metrics'+'/dt='+str(day)+'/'+'out' + str(i) + '.csv'
       s3.meta.client.upload_file(infile, destination_bucket, outfile)
 
       i = i + 1
