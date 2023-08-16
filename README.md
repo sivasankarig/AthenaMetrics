@@ -5,13 +5,17 @@ The athena_util.py is a generic class that can be used to interact with Athena A
 
 Step 1. Clone the repo to your local 
 
-Step 2.  Generate a wheel file
+Step 2.  Generate a wheel file or you can use existing wheel file from [https://github.com/sivasankarig/AthenaMetrics/blob/master/dist/CloudtrailAthenaMetrics-0.1-py3-none-any.whl]
 
+```
 pip install wheel
 python setup.py bdist_wheel
+```
+
 Step 3 : Upload package to your s3 
 
     https://docs.aws.amazon.com/glue/latest/dg/add-job-python.html
+    
 Step 4. Create a cloudtrail table 
 
 ```
