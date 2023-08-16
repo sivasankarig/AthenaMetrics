@@ -1,0 +1,9 @@
+README.md
+setup.py
+CloudtrailAthenaMetrics/__init__.py
+CloudtrailAthenaMetrics/athena_util.py
+CloudtrailAthenaMetrics/athenametrics.py
+CloudtrailAthenaMetrics.egg-info/PKG-INFO
+CloudtrailAthenaMetrics.egg-info/SOURCES.txt
+CloudtrailAthenaMetrics.egg-info/dependency_links.txt
+CloudtrailAthenaMetrics.egg-info/top_level.txt
