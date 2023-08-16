@@ -113,7 +113,7 @@ def collect_metrics(staging_folder, destination_bucket,tablename='default.cloudt
       query_data = row['Data'][2]
       query_ids = json.loads(query_data['VarCharValue'].strip('"'))
       day = day_data['VarCharValue'].strip('"')
-      batch_num = day_data['batch_data'].strip('"')
+      batch_num = batch_data['VarCharValue'].strip('"')
       i = 0
       ## Iterate in batches of 50. That is the default Athena limit per account.
       try:
