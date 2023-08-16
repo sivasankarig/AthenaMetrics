@@ -3,14 +3,18 @@ You can use this code to gather custom metrics from Athena API, that are not ava
 
 The athena_util.py is a generic class that can be used to interact with Athena API and can be used outside this repository
 
-Step1 . Clone the repo to your local 
+Step 1. Clone the repo to your local 
+
 Step 2.  Generate a wheel file
+
 pip install wheel
 python setup.py bdist_wheel
 Step 3 : Upload package to your s3 
+
     https://docs.aws.amazon.com/glue/latest/dg/add-job-python.html
 Step 4. Create a cloudtrail table 
 
+```
 CREATE EXTERNAL TABLE cloudtrail_logs_pp(
     eventVersion STRING,
     userIdentity STRUCT<
@@ -79,10 +83,26 @@ TBLPROPERTIES (
   'projection.day.range'='2020/01/01,NOW', 
   'projection.day.type'='date', 
   'storage.location.template'='s3://bucket/AWSLogs/account-id/CloudTrail/aws-region/${day}')
-
+```
 https://docs.aws.amazon.com/athena/latest/ug/cloudtrail-logs.html#create-cloudtrail-table-partition-projection
+
 Step 4. Create a glue python shell job and execute it
+
+```
+import sys
+from CloudtrailAthenaMetrics import athenametrics as am
+
+stage_folder='s3://<bucketname>/stage'
+destination_bucket='<bucketname>'
+cloudtrail_tablename='default.cloudtrail_logs_pp'
+region='us-east-1'
+backfill=True ##set true on first run then set it false. 
+am.collect_metrics(staging_folder=stage_folder,destination_bucket=destination_bucket,tablename=cloudtrail_tablename,region=region,backfill=backfill)
+
+```
+
 Step 5. Create api_output table and load partitions
+```
 CREATE EXTERNAL TABLE IF NOT EXISTS athena_api_output(
   queryid string,
   querydatabase string,
@@ -100,4 +120,5 @@ WITH SERDEPROPERTIES (
   'field.delim' = ','
 ) LOCATION 's3://<s3 location of the output from the API calls>'
 TBLPROPERTIES ('has_encrypted_data'='false')
+```
 
