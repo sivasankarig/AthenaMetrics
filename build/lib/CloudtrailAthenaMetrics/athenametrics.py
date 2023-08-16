@@ -109,9 +109,11 @@ def collect_metrics(staging_folder, destination_bucket,tablename='default.cloudt
   query_ids =[]
   for row in result["ResultSet"]["Rows"]:
       day_data = row['Data'][0]
+      batch_data = row['Data'][1]
       query_data = row['Data'][2]
       query_ids = json.loads(query_data['VarCharValue'].strip('"'))
       day = day_data['VarCharValue'].strip('"')
+      batch_num = day_data['batch_data'].strip('"')
       i = 0
       ## Iterate in batches of 50. That is the default Athena limit per account.
       try:
@@ -148,7 +150,7 @@ def collect_metrics(staging_folder, destination_bucket,tablename='default.cloudt
       s3 = boto3.resource('s3', region_name='us-west-2')
 
       infile = 'out' + str(i) + '.csv'
-      outfile = 'athena-metrics'+'/dt='+str(day)+'/'+'out' + str(i) + '.csv'
+      outfile = 'athena-metrics'+'/dt='+str(day)+'/'+'out' + str(batch_num) + '.csv'
       s3.meta.client.upload_file(infile, destination_bucket, outfile)
 
       i = i + 1
