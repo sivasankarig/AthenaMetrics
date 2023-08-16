@@ -1,4 +1,4 @@
-from athena_util import AthenaUtil
+from .athena_util import AthenaUtil
 import argparse
 import boto3
 import datetime
